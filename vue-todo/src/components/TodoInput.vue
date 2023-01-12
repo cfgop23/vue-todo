@@ -17,8 +17,7 @@ export default {
   methods: {
     addTodo: function() {
       if(!this.newTodoItem) return;
-      const obj = { completed: false, item: this.newTodoItem};
-      localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+      this.$emit('addTodoItem', this.newTodoItem);
       this.clearInput();
     },
     clearInput: function () {
@@ -45,7 +44,7 @@ export default {
   padding: 0;
   width: 420px;
   border-style: none;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   line-height: 50px;
 }
 .addContainer {
