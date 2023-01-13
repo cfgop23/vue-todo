@@ -4,25 +4,44 @@
     <span class="addContainer shadow" v-on:click="addTodo">
       <i class="addBtn fa-solid fa-plus"></i>
     </span>
+
+    <Modal v-if="showModal" @close="showModal = false">
+      <!--
+      you can use custom content here to overwrite
+      default content
+      -->
+      <h3 slot="header">알림 <i class="fa-solid fa-xmark closeModalBtn" @click="showModal = false"></i></h3>
+      <p slot="body">내용을 입력하세요.</p>
+      <!-- <button slot="footer">확인</button> -->
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from './common/AlertModal.vue'
+
 export default {
   data: function () {
     return {
-      newTodoItem: ""
+      newTodoItem: "",
+      showModal: false
     }
   },
   methods: {
     addTodo: function() {
-      if(!this.newTodoItem) return;
+      if(this.newTodoItem) {
       this.$emit('addTodoItem', this.newTodoItem);
       this.clearInput();
+      } else {
+        this.showModal = !this.showModal;
+      }
     },
     clearInput: function () {
       this.newTodoItem = "";
     }
+  },
+  components: {
+    Modal
   }
 }
 </script>
@@ -59,5 +78,8 @@ export default {
 .addBtn {
   color: white;
   /* vertical-align: middle; */
+}
+.closeModalBtn {
+  color: #42b983;
 }
 </style>
