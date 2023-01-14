@@ -19,12 +19,14 @@ import TodoFooter from './components/TodoFooter.vue'
 export default {
   data: function () {
     return {
-      todoItems: []
+      todoItems: [],
+      index: 0
     }
   },
   methods: {
     addOneItem: function(todoItem) {
-      const obj = { completed: false, item: todoItem};
+      this.index += 1;
+      const obj = { completed: false, item: todoItem, index: this.index - 1};
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
@@ -42,14 +44,17 @@ export default {
     clearAllItems: function () {
       localStorage.clear();
       this.todoItems = [];
+      this.index = 0;
     }
   },
   created: function () {
     if(!localStorage.length) return;
     for(let i = 0; i < localStorage.length; i++) {
-      this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
       // this.todoItems.push(localStorage.key(i));
+      this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
     }
+    this.todoItems = this.todoItems.sort((a,b)=>(a.index - b.index));
+    this.index = this.todoItems[this.todoItems.length -1].index + 1;
   },
   components: {
     TodoHeader,
