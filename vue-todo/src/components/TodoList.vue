@@ -18,10 +18,10 @@
 export default {
   props: ['propsData'],
   methods: {
-    removeTodo: function (todoItem, i)  {
+    removeTodo(todoItem, i)  {
       this.$emit('removeItem', todoItem, i);
     },
-    toggleComplete: function (todoItem, i) {
+    toggleComplete(todoItem, i) {
       this.$emit('toggleItem', todoItem, i);
     }
   },
@@ -30,6 +30,7 @@ export default {
 
 <style scoped>
 ul {
+  position: relative;
   list-style-type: none;
   padding-left: 0px;
   margin-top: 0;

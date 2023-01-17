@@ -17,37 +17,37 @@ import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
 
 export default {
-  data: function () {
+  data() {
     return {
       todoItems: [],
       index: 0
     }
   },
   methods: {
-    addOneItem: function(todoItem) {
+    addOneItem(todoItem) {
       this.index += 1;
       const obj = { completed: false, item: todoItem, index: this.index - 1};
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
-    removeOneItem: function(todoItem, i) {
+    removeOneItem(todoItem, i) {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(i, 1);
     },
-    toggleOneItem: function (todoItem, i) {
+    toggleOneItem(todoItem, i) {
       // todoItem.completed = !todoItem.completed;
       this.todoItems[i].completed = !this.todoItems[i].completed;
       // 로컬스토리지에 boolean 데이터 갱신
       localStorage.removeItem(todoItem.item);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
-    clearAllItems: function () {
+    clearAllItems() {
       localStorage.clear();
       this.todoItems = [];
       this.index = 0;
     }
   },
-  created: function () {
+  created() {
     if(!localStorage.length) return;
     for(let i = 0; i < localStorage.length; i++) {
       // this.todoItems.push(localStorage.key(i));
